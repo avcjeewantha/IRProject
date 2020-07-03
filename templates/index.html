@@ -1,0 +1,47 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<div class="col-md-3"></div>
+<div class="container col-md-9">
+	<form style="margin-top:20px" action="http://127.0.0.1:5000/" method="post">
+		<input type="text" name="searchTerm" placeholder="Enter and Search">
+		<input type="submit" value="Search">
+	</form>
+
+	{% if hits %}
+	<hgroup class="mb20">
+		<h2 class="lead" id="results">Search Results : <strong class="text-danger">{{ numResults }}</strong> results
+			were found</h2>
+	</hgroup>
+
+	<section id='song_section'>
+		{% for hit in hits %}
+		<article class="search-result row">
+			<h4><a href="#" title="">{{ hit._source.title }}</a></h3>
+				<div class="col-md-6">
+					<p style="white-space: pre-line">{{ hit._source.song_lyrics }}</p>
+				</div>
+				<div class="col-md-6">
+					<ul class="meta-search">
+						<li><span>Genre: {{ hit._source.genre }} </span></li>
+						<li><span>Artist: {{ hit._source.artist }}</span></li>
+						<li><span>Music: {{ hit._source.music }}</span></li>
+						<li><span>Lyrics: {{ hit._source.lyrics }}</span></li>
+						<li><span>Key: {{ hit._source.guitar_key }}</span></li>
+						<li><span>Views: {{ hit._source.views }}</span></li>
+					</ul>
+				</div>
+				<span class="clearfix borda"></span>
+		</article>
+		{% endfor %}
+	</section>
+	{% else %}
+	{% if init %}
+	{% else %}
+	<hgroup class="mb20">
+		<h1>Search Results</h1>
+		<h2 class="lead"><strong class="text-danger">0</strong> results were found.</h2>
+	</hgroup>
+	{% endif %}
+	{% endif %}
+</div>
